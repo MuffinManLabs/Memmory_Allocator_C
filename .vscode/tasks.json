@@ -4,7 +4,7 @@
         {
             "label": "Build and Run",
             "type": "shell",
-            "command": "gcc *.c -o main && ./main",
+            "command": "wsl bash -c 'gcc *.c -o main && ./main'",
             "group": {
                 "kind": "build",
                 "isDefault": true
