@@ -1,5 +1,7 @@
 #include <stdio.h>
 #include <sys/mman.h>
+#include "allocator.h"
+
 
 // void *ptr = mmap(NULL, 4096, PROT_READ | PROT_WRITE, MAP_PRIVATE | MAP_ANONYMOUS, -1, 0);
 
@@ -7,7 +9,11 @@
 //call mmap once to get 4096-byte slab set up first
 //header at the start of the slab
 void * heap_init() {
+    //create a large slab of memory
     void *slab_ptr = mmap(NULL, 4096, PROT_READ | PROT_WRITE, MAP_PRIVATE | MAP_ANONYMOUS, -1, 0);
+    //create the header you will attach to the beginning
+    block_header *first_header = calloc(1,sizeof(block_header));
+
     return slab_ptr;
 } 
 

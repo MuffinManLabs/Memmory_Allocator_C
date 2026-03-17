@@ -78,6 +78,16 @@ heap_dump()         — walk the linked list
 ================================================================================
 */
 
+#include <stdio.h>
+#include "allocator.h"
+#include <sys/mman.h>
+
 int main() {
+    void *slab = heap_init();
+    if (slab == MAP_FAILED) {
+        printf("mmap failed\n");
+    } else {
+        printf("heap initialized at address: %p\n", slab);
+    }
     return 0;
 }
