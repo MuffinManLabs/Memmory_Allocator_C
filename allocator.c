@@ -9,12 +9,15 @@
 //call mmap once to get 4096-byte slab set up first
 //header at the start of the slab
 void * heap_init() {
-    //create a large slab of memory
-    void *slab_ptr = mmap(NULL, 4096, PROT_READ | PROT_WRITE, MAP_PRIVATE | MAP_ANONYMOUS, -1, 0);
-    //create the header you will attach to the beginning
-    block_header *first_header = calloc(1,sizeof(block_header));
-
-    return slab_ptr;
+    //create a large arena of memory
+    void *arena = mmap(NULL, 4096, PROT_READ | PROT_WRITE, MAP_PRIVATE | MAP_ANONYMOUS, -1, 0);
+    //point a block header to the memory location as the enitre arena 
+    block_header *first_header = arena;
+    //set the fields
+    first_header->size = 4096 - sizeof(block_header);
+    first_header->free = 1;
+    first_header->next = NULL;
+    return arena;
 } 
 
 //walk the linked list of headers
@@ -34,4 +37,11 @@ void * heap_init() {
 //walk the linked list
 //print each block's size, free/used status
 //(debugging tool to see the state of the slab)
-// heap_dump()
+void heap_dump(block_header *ptr){
+    while (ptr) {
+        printf("size is %zu bytes \n", ptr->size);
+        printf("free is %d\n", ptr->free);
+        ptr = ptr->next;
+    }
+    return;
+}

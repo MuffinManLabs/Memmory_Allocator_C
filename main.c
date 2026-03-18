@@ -83,11 +83,12 @@ heap_dump()         — walk the linked list
 #include <sys/mman.h>
 
 int main() {
-    void *slab = heap_init();
-    if (slab == MAP_FAILED) {
+    void *arena = heap_init();
+    if (arena == MAP_FAILED) {
         printf("mmap failed\n");
     } else {
-        printf("heap initialized at address: %p\n", slab);
+        printf("heap initialized at address: %p\n", arena);
+        heap_dump(arena);
     }
     return 0;
 }
