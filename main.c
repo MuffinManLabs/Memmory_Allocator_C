@@ -73,7 +73,7 @@ my_free(ptr)        — step back from ptr to find the header
 
 heap_dump()         — walk the linked list
                       print each block's size, free/used status
-                      (debugging tool to see the state of the slab)
+                      (debugging tool to see the state of the arena)
 
 ================================================================================
 */
@@ -88,7 +88,8 @@ int main() {
         printf("mmap failed\n");
     } else {
         printf("heap initialized at address: %p\n", arena);
-        heap_dump(arena);
+        my_malloc(100);
+        heap_dump();
     }
     return 0;
 }

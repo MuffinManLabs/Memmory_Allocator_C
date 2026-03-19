@@ -12,6 +12,6 @@ typedef struct block_header {
 void *heap_init();
 void *my_malloc(size_t size);
 void my_free(void *ptr);
-void heap_dump(block_header *ptr);
+void heap_dump();
 
 #endif
