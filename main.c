@@ -86,10 +86,24 @@ int main() {
     void *arena = heap_init();
     if (arena == MAP_FAILED) {
         printf("mmap failed\n");
-    } else {
-        printf("heap initialized at address: %p\n", arena);
-        my_malloc(100);
-        heap_dump();
+        return 1;
     }
+
+    printf("=== after heap_init ===\n");
+    heap_dump();
+
+    printf("\n=== after malloc(100) and malloc(200) ===\n");
+    void *a = my_malloc(100);
+    void *b = my_malloc(200);
+    heap_dump();
+
+    printf("\n=== after freeing first block (100) ===\n");
+    my_free(a);
+    heap_dump();
+
+    printf("\n=== after freeing second block (200) — should coalesce ===\n");
+    my_free(b);
+    heap_dump();
+
     return 0;
 }
